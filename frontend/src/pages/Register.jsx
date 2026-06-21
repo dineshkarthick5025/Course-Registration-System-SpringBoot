@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
+import { User, Mail, BookOpen, AlertCircle, CheckCircle } from "lucide-react";
 
 function Register() {
     const location = useLocation();
@@ -88,74 +89,91 @@ function Register() {
             <Nav />
 
             <div className="app-container" style={{ maxWidth: "600px" }}>
-                <h1>Register for a Course</h1>
-                <p style={{ textAlign: "center", marginBottom: "2rem" }}>
-                    Fill out the form below to enroll in your desired course.
+                <h1>Course Registration</h1>
+                <p style={{ textAlign: "center", marginBottom: "2.5rem", color: "var(--text-secondary)" }}>
+                    Fill out the form below to enroll in your desired course program.
                 </p>
 
                 <div className="card">
                     {successMsg && (
                         <div className="alert alert-success">
-                            {successMsg}
+                            <CheckCircle size={18} />
+                            <span>{successMsg}</span>
                         </div>
                     )}
 
                     {errorMsg && (
                         <div className="alert alert-error">
-                            {errorMsg}
+                            <AlertCircle size={18} />
+                            <span>{errorMsg}</span>
                         </div>
                     )}
 
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="name">Full Name</label>
-                            <input
-                                id="name"
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                placeholder="Enter your full name"
-                                required
-                            />
+                            <div className="form-input-wrapper">
+                                <div className="form-input-icon">
+                                    <User size={18} />
+                                </div>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="Enter your full name"
+                                    required
+                                />
+                            </div>
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="email">Email Address</label>
-                            <input
-                                id="email"
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="Enter your email address"
-                                required
-                            />
+                            <div className="form-input-wrapper">
+                                <div className="form-input-icon">
+                                    <Mail size={18} />
+                                </div>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Enter your email address"
+                                    required
+                                />
+                            </div>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="courseName">Select Course</label>
-                            <select
-                                id="courseName"
-                                name="courseName"
-                                value={formData.courseName}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">-- Choose a course --</option>
-                                {courses.map((c) => (
-                                    <option key={c.courseId} value={c.courseName}>
-                                        {c.courseName} ({c.duration} hrs)
-                                    </option>
-                                ))}
-                                {formData.courseName && !courses.some(c => c.courseName === formData.courseName) && (
-                                    <option value={formData.courseName}>{formData.courseName}</option>
-                                )}
-                            </select>
+                            <label htmlFor="courseName">Select Course Program</label>
+                            <div className="form-input-wrapper">
+                                <div className="form-input-icon">
+                                    <BookOpen size={18} />
+                                </div>
+                                <select
+                                    id="courseName"
+                                    name="courseName"
+                                    value={formData.courseName}
+                                    onChange={handleChange}
+                                    required
+                                >
+                                    <option value="">-- Choose a course --</option>
+                                    {courses.map((c) => (
+                                        <option key={c.courseId} value={c.courseName}>
+                                            {c.courseName} ({c.duration} hrs)
+                                        </option>
+                                    ))}
+                                    {formData.courseName && !courses.some(c => c.courseName === formData.courseName) && (
+                                        <option value={formData.courseName}>{formData.courseName}</option>
+                                    )}
+                                </select>
+                            </div>
                         </div>
 
                         <button type="submit" className="btn" style={{ marginTop: "1rem" }} disabled={submitting}>
-                            {submitting ? "Registering..." : "Submit Registration"}
+                            {submitting ? "Processing Enrollment..." : "Complete Registration"}
                         </button>
                     </form>
                 </div>
